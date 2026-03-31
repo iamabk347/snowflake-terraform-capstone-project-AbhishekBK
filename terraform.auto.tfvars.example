@@ -1,0 +1,50 @@
+environment         = "dev"
+snowflake_account   = "YOUR_SNOWFLAKE_ACCOUNT"
+snowflake_user      = "YOUR_SNOWFLAKE_USER"
+snowflake_password  = "YOUR_SNOWFLAKE_PASSWORD"
+snowflake_role      = "ACCOUNTADMIN"
+snowflake_warehouse = "COMPUTE_WH"
+
+warehouse_definitions = {
+  compute_wh_custom = {
+    warehouse_size = "XSMALL"
+    auto_suspend   = 60
+    auto_resume    = true
+  }
+  analytics_wh = {
+    warehouse_size = "SMALL"
+    auto_suspend   = 60
+    auto_resume    = true
+  }
+}
+
+database_definitions = {
+  sales_db = {
+    schemas = ["raw", "curated", "analytics"]
+  }
+  hr_db = {
+    schemas = ["raw", "curated"]
+  }
+}
+
+role_names = [
+  "SYSADMIN_CUSTOM",
+  "DATA_ENGINEER",
+  "DATA_ANALYST"
+]
+
+user_definitions = {
+  data_engineer_user = {
+    login_name   = "data_engineer_user"
+    display_name = "Data Engineer User"
+    email        = "data.engineer@example.com"
+    default_role = "DATA_ENGINEER"
+  }
+
+  data_analyst_user = {
+    login_name   = "data_analyst_user"
+    display_name = "Data Analyst User"
+    email        = "data.analyst@example.com"
+    default_role = "DATA_ANALYST"
+  }
+}
