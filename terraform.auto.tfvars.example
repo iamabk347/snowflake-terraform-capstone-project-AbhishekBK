@@ -1,7 +1,7 @@
 environment         = "dev"
-snowflake_account   = "YOUR_SNOWFLAKE_ACCOUNT"
-snowflake_user      = "YOUR_SNOWFLAKE_USER"
-snowflake_password  = "YOUR_SNOWFLAKE_PASSWORD"
+snowflake_account   = "SNOWFLAKE_ACCOUNT"
+snowflake_user      = "SNOWFLAKE_USER"
+snowflake_password  = "SNOWFLAKE_PASSWORD"
 snowflake_role      = "ACCOUNTADMIN"
 snowflake_warehouse = "COMPUTE_WH"
 
