@@ -1,25 +1,25 @@
-# Snowflake Terraform Capstone Project
+# Snowflake Terraform Capstone Project - Abhishek BK
 
 ## Project Overview
 
-This project implements Infrastructure as Code (IaC) using Terraform to provision and manage Snowflake resources in a scalable, consistent, and secure manner.
+This project is built to automate Snowflake infrastructure using Terraform.
 
-The solution automates the creation of warehouses, databases, schemas, roles, users, and access controls, eliminating manual configuration and reducing operational risks.
+Instead of manually creating warehouses, databases, schemas, roles, users, and permissions in Snowflake, everything is handled through Infrastructure as Code (IaC). This makes the setup consistent, scalable, and much easier to manage.
 
 ## Objectives
 
-- Automate Snowflake resource provisioning using Terraform  
-- Implement role-based access control (RBAC)  
-- Design modular and reusable Terraform components  
-- Ensure scalability and maintainability of infrastructure  
+* Automate Snowflake resource provisioning using Terraform
+* Implement role-based access control (RBAC)
+* Build a modular and reusable Terraform structure
+* Keep the setup scalable and easy to maintain
 
 ## Architecture
 
-The project follows a modular Terraform structure:
+The project is structured in a modular way so that each component is handled separately and cleanly.
 
 snowflake-capstone/
 │
-├── backend/                  # Remote state configuration (S3)
+├── backend/                  # Remote state setup (S3)
 ├── modules/
 │   ├── warehouse/            # Warehouse provisioning
 │   ├── database/             # Database and schema provisioning
@@ -27,118 +27,148 @@ snowflake-capstone/
 │   ├── user/                 # User creation
 │   ├── grant/                # Access control and permissions
 │
-├── main.tf                   # Root module configuration
-├── provider.tf               # Snowflake provider configuration
+├── main.tf                   # Orchestration layer
+├── provider.tf               # Snowflake connection config
 ├── variables.tf              # Input variables
-├── terraform.auto.tfvars     # Environment configuration
+├── terraform.auto.tfvars.example  # Sample config (no secrets)
 
 ## Technologies Used
 
-- Terraform  
-- Snowflake  
-- AWS S3 (Remote backend for Terraform state)
+* Terraform
+* Snowflake
+* AWS S3 (for remote Terraform state)
 
 ## Resources Provisioned
 
 ### Warehouses
-- COMPUTE_WH_CUSTOM  
-- ANALYTICS_WH  
+
+* COMPUTE_WH_CUSTOM
+* ANALYTICS_WH
 
 ### Databases
-- HR_DB  
-- SALES_DB  
+
+* HR_DB
+* SALES_DB
 
 ### Schemas
 
 HR_DB:
-- RAW  
-- CURATED  
+
+* RAW
+* CURATED
 
 SALES_DB:
-- RAW  
-- CURATED  
-- ANALYTICS  
+
+* RAW
+* CURATED
+* ANALYTICS
 
 ## Role-Based Access Control (RBAC)
 
 ### Roles
-- SYSADMIN_CUSTOM  
-- DATA_ENGINEER  
-- DATA_ANALYST  
+
+* SYSADMIN_CUSTOM
+* DATA_ENGINEER
+* DATA_ANALYST
 
 ### Users
-- DATA_ENGINEER_USER  
-- DATA_ANALYST_USER  
+
+* DATA_ENGINEER_USER
+* DATA_ANALYST_USER
 
 ### Role Assignments
-- DATA_ENGINEER_USER → DATA_ENGINEER  
-- DATA_ANALYST_USER → DATA_ANALYST  
+
+* DATA_ENGINEER_USER → DATA_ENGINEER
+* DATA_ANALYST_USER → DATA_ANALYST
 
 ## Permissions
 
 ### Warehouse Access
-All roles are granted USAGE on COMPUTE_WH_CUSTOM.
+
+All roles are given USAGE on COMPUTE_WH_CUSTOM.
 
 ### Database Access
-DATA_ENGINEER is granted USAGE on:
-- HR_DB  
-- SALES_DB  
+
+DATA_ENGINEER has USAGE on:
+
+* HR_DB
+* SALES_DB
 
 ### Schema Access
-DATA_ENGINEER is granted USAGE on:
-- HR_DB.RAW  
-- SALES_DB.RAW  
+
+DATA_ENGINEER has USAGE on:
+
+* HR_DB.RAW
+* SALES_DB.RAW
 
 ## Dynamic Resource Creation
 
-Terraform dynamic constructs such as for_each are used to create:
+The project uses for_each to dynamically create resources like:
 
-- Warehouses  
-- Databases  
-- Schemas  
-- Roles  
-- Users  
-- Grants  
+* Warehouses
+* Databases
+* Schemas
+* Roles
+* Users
+* Grants
 
-This approach ensures scalability and reduces code duplication.
+This avoids repetition and makes the code scalable.
 
 ## State Management
 
-Terraform remote backend is configured using AWS S3 to:
+Terraform state is stored remotely in AWS S3.
 
-- Store state centrally  
-- Maintain consistency across executions  
+This helps with:
+
+* keeping state consistent
+* avoiding local conflicts
+* making the setup closer to real-world usage
 
 ## Security and Best Practices
 
-- No hardcoded credentials  
-- Sensitive inputs handled through variables  
-- Modular and reusable code structure  
-- Clear naming conventions  
-- Separation of concerns across modules  
+* No credentials are hardcoded
+* Sensitive values are handled through variables
+* The project is fully modular
+* Naming is consistent and clean
+* Each responsibility is separated into its own module
+
+## Configuration
+
+This project does not store real credentials in the repository.
+
+A sample file is provided:
+
+terraform.auto.tfvars.example
+
+To run the project:
+
+1. Create a new file:
+   terraform.auto.tfvars
+
+2. Copy the contents from the example file
+
+3. Replace the placeholder values with your actual Snowflake credentials
+
+This keeps the project secure while still making it easy to use.
 
 ## Execution Steps
 
-### Initialize Terraform
+Initialize Terraform:
+
+terraform fmt
 terraform init
 
-### Validate Configuration
+Validate configuration:
 terraform validate
 
-### Preview Changes
+Preview changes:
 terraform plan
 
-### Apply Changes
+Apply changes:
 terraform apply
-
-## Future Enhancements
-
-- Multi-environment support (Dev, QA, Prod)  
-- Table creation and table-level permissions  
-- CI/CD pipeline integration  
-- Data loading simulation  
-- Terraform workspaces  
 
 ## Conclusion
 
-This project demonstrates the use of Terraform to build a scalable and secure Snowflake environment with proper access control and modular design, aligned with industry best practices.
+This project shows how Terraform can be used to manage Snowflake infrastructure in a clean, scalable, and secure way.
+
+The focus was on modular design, RBAC implementation, and following best practices that would apply in a real-world setup.
