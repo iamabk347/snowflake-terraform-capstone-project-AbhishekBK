@@ -12,9 +12,12 @@ provider "snowflake" {
   organization_name = "NOVWSPQ"
   account_name      = "MA37777"
 
-# Authentication done
+  # Authentication done
 
   user     = var.snowflake_user
   password = var.snowflake_password
-  role     = var.snowflake_role
+
+
+  # Role assigned under which Terraform will execute operations
+  role = var.snowflake_role
 }

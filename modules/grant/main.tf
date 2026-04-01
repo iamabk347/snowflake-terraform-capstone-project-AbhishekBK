@@ -1,3 +1,7 @@
+# implementing Role-Based Access Control (RBAC)
+# by assigning privileges to roles and mapping roles to users:
+
+
 terraform {
   required_providers {
     snowflake = {
@@ -20,6 +24,7 @@ resource "snowflake_grant_privileges_to_account_role" "warehouse_usage" {
 }
 
 # Grant database usage
+# Grants USAGE privilege on databases to a specific role
 resource "snowflake_grant_privileges_to_account_role" "database_usage" {
   for_each = var.database_names
 
@@ -32,7 +37,9 @@ resource "snowflake_grant_privileges_to_account_role" "database_usage" {
   }
 }
 
-# Grant schema usage
+# Schema Usage Grant
+# Grants USAGE privilege on schemas within each database:
+
 resource "snowflake_grant_privileges_to_account_role" "schema_usage" {
   for_each = var.database_names
 
